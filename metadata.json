@@ -1,0 +1,6 @@
+{
+  "name": "LoopTube - YouTube Looper & Background Player",
+  "description": "Pemutar video YouTube tanpa henti dengan mode looping terus-menerus, pemutaran latar belakang, playlist multi-link & channel, serta autentikasi Google.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

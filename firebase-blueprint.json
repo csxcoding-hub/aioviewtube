@@ -1,0 +1,142 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "User profile photo URL"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when profile was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when profile was last updated"
+        }
+      },
+      "required": ["userId", "email"]
+    },
+    "Playlist": {
+      "title": "Playlist",
+      "description": "User video playlist",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique playlist identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Playlist name"
+        },
+        "loopMode": {
+          "type": "string",
+          "enum": ["all", "single", "off"],
+          "description": "Loop mode for playback"
+        },
+        "itemCount": {
+          "type": "number",
+          "description": "Number of videos in the playlist"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["id", "userId", "name"]
+    },
+    "PlaylistItem": {
+      "title": "PlaylistItem",
+      "description": "A video in a playlist",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique item identifier"
+        },
+        "playlistId": {
+          "type": "string",
+          "description": "Parent playlist identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "videoId": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "description": "YouTube video 11-char ID"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "Video title"
+        },
+        "thumbnailUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Video thumbnail image URL"
+        },
+        "channelTitle": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Channel name or author"
+        },
+        "order": {
+          "type": "number",
+          "description": "Position order in playlist"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["id", "playlistId", "userId", "videoId", "title"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Stores private user profile information"
+    },
+    "/users/{userId}/playlists/{playlistId}": {
+      "schema": "Playlist",
+      "description": "Stores user playlists"
+    },
+    "/users/{userId}/playlists/{playlistId}/items/{itemId}": {
+      "schema": "PlaylistItem",
+      "description": "Stores video items within a playlist"
+    }
+  }
+}

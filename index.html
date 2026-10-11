@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/app-icon.png" />
+    <meta name="author" content="Kios Kode (https://kioskode.my.id/)" />
+    <title>LoopTube - YouTube Looper & Background Player</title>
+    <meta name="description" content="Pemutar video YouTube tanpa henti dengan mode looping terus-menerus, pemutaran latar belakang, playlist multi-link & channel, serta autentikasi Google." />
+    <meta property="og:title" content="LoopTube - YouTube Looper & Background Player" />
+    <meta property="og:description" content="Pemutar video YouTube tanpa henti dengan mode looping terus-menerus, pemutaran latar belakang, playlist multi-link & channel, serta autentikasi Google." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Gracefully mock Vite HMR WebSocket in preview/iframe to prevent "WebSocket closed without opened" errors
+      (function() {
+        const OrigWS = window.WebSocket;
+        if (OrigWS) {
+          window.WebSocket = function(url, protocols) {
+            const isViteHmr = (protocols === 'vite-hmr') ||
+              (Array.isArray(protocols) && protocols.includes('vite-hmr')) ||
+              (typeof url === 'string' && (url.includes('vite-hmr') || url.includes('/@vite/client')));
+            if (isViteHmr) {
+              const fakeWs = {
+                readyState: 1, // OPEN
+                CONNECTING: 0,
+                OPEN: 1,
+                CLOSING: 2,
+                CLOSED: 3,
+                url: String(url),
+                protocol: 'vite-hmr',
+                extensions: '',
+                bufferedAmount: 0,
+                binaryType: 'blob',
+                onopen: null,
+                onclose: null,
+                onerror: null,
+                onmessage: null,
+                send: function() {},
+                close: function() {},
+                addEventListener: function(event, handler) {
+                  if (event === 'open' && typeof handler === 'function') {
+                    setTimeout(() => {
+                      try { handler({ type: 'open' }); } catch (e) {}
+                    }, 0);
+                  }
+                },
+                removeEventListener: function() {},
+                dispatchEvent: function() { return false; },
+              };
+              return fakeWs;
+            }
+            return new OrigWS(url, protocols);
+          };
+          window.WebSocket.prototype = OrigWS.prototype;
+          window.WebSocket.CONNECTING = 0;
+          window.WebSocket.OPEN = 1;
+          window.WebSocket.CLOSING = 2;
+          window.WebSocket.CLOSED = 3;
+        }
+
+        // Suppress any leftover Vite console logs or rejections
+        const origConsoleError = console.error;
+        console.error = function(...args) {
+          if (args.some(arg => typeof arg === 'string' && (arg.includes('[vite]') || arg.includes('WebSocket')))) {
+            return;
+          }
+          origConsoleError.apply(console, args);
+        };
+
+        window.addEventListener('unhandledrejection', function(event) {
+          const reasonStr = String(event.reason || '');
+          const msgStr = String(event.reason?.message || '');
+          if (reasonStr.includes('WebSocket') || msgStr.includes('WebSocket') || reasonStr.includes('vite') || msgStr.includes('vite')) {
+            event.preventDefault();
+            event.stopImmediatePropagation?.();
+          }
+        });
+
+        window.addEventListener('error', function(event) {
+          const msg = String(event.message || '');
+          if (msg.includes('WebSocket') || msg.includes('vite')) {
+            event.preventDefault();
+            event.stopImmediatePropagation?.();
+          }
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
