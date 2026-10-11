@@ -231,7 +231,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onGuestLogin }) => {
                   )}
                 </button>
                 <p className="text-[11px] text-zinc-400 text-center">
-                  Mengaktifkan hak akses resmi untuk Like, Subscribe channel, dan tulis Komentar langsung.
+                  Masuk dengan 1-klik untuk simpan playlist dan sinkronisasi otomatis antar perangkat.
                 </p>
               </div>
 
@@ -253,7 +253,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onGuestLogin }) => {
                 <span>Masuk Cepat & Putar Langsung</span>
               </button>
               <p className="text-[10px] text-emerald-400/90 text-center flex items-center justify-center gap-1">
-                <CheckCircle className="w-3.5 h-3.5" /> Langsung putar semua 6+ video Kios Kode seketika
+                <CheckCircle className="w-3.5 h-3.5" /> Langsung putar semua 6+ video Kios Kode seketika tanpa login
               </p>
             </div>
 
@@ -274,14 +274,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onGuestLogin }) => {
 
               {showConfigGuide && (
                 <div className="mt-2.5 p-3.5 bg-zinc-950 rounded-2xl border border-zinc-800 text-[11px] text-zinc-400 space-y-2 leading-relaxed">
-                  <p className="font-bold text-white">Catatan Autentikasi Google:</p>
+                  <p className="font-bold text-white">Panduan Masuk:</p>
                   <p>
-                    Saat Anda login, aplikasi meminta izin OAuth YouTube agar tombol Like, Subscribe,
-                    dan Komentar di dalam aplikasi terhubung ke akun YouTube resmi Anda.
+                    • <strong>Masuk dengan Akun Google:</strong> Akses penuh untuk menyimpan riwayat putar dan playlist favorit Anda di Cloud. Semua akun Google didukung langsung.
                   </p>
                   <p>
-                    Jika popup Google tertutup, Anda tetap bisa memilih <strong>"Masuk Cepat"</strong> untuk
-                    seketika memutar dan mengulang video Kios Kode.
+                    • <strong>Masuk Cepat (Tamu):</strong> Putar langsung video loop Kios Kode secara instan tanpa perlu akun Google.
                   </p>
                 </div>
               )}
