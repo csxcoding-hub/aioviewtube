@@ -5,12 +5,9 @@ echo   LoopTube PRO - Auto Push to GitHub
 echo   KiosKode: https://kioskode.my.id/
 echo ========================================================
 echo.
-set /p REPO_URL="Masukkan URL Repository GitHub Anda (contoh: https://github.com/user/looptube.git): "
-if "%REPO_URL%"=="" (
-    echo Error: URL Repository tidak boleh kosong!
-    pause
-    exit /b
-)
+set DEFAULT_REPO=https://github.com/csxcoding-hub/aioviewtube.git
+set /p REPO_URL="Masukkan URL Repository GitHub [%DEFAULT_REPO%]: "
+if "%REPO_URL%"=="" set REPO_URL=%DEFAULT_REPO%
 
 echo.
 echo [1/4] Menginisialisasi git...
